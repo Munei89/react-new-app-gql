@@ -1,7 +1,8 @@
 import React from 'react';
-import logo from './logo.svg';
 import NewsList from './components/NewsList';
 import NewsDetail from './components/NewsDetail';
+import Grid from '@mui/material/Grid';
+import Container from '@mui/material/Container';
 import './App.css';
 
 function App() {
@@ -16,13 +17,20 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-      </header>
-      <NewsList handleIdChange={handleIdChange} postDelete={isDelete} />
-      <NewsDetail id={id} handlePostDelete={handlePostDelete}/>
-    </div>
+
+    <React.Fragment>
+      <Container maxWidth="md">
+        <Grid container spacing={4}>
+            <Grid item md={5}>
+                <NewsList handleIdChange={handleIdChange} postDelete={isDelete} />
+            </Grid>
+            <Grid item md={7}>
+                <NewsDetail id={id} handlePostDelete={handlePostDelete}/>
+            </Grid>
+        </Grid>
+      </Container>
+    </React.Fragment>
+
   );
 }
 

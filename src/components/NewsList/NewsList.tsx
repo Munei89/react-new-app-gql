@@ -1,5 +1,6 @@
 import React from "react";
 import { useQuery, gql } from "@apollo/client";
+import moment from "moment";
 
 
  interface INewsListInterFace { 
@@ -48,8 +49,10 @@ const NewsList: React.FC<IProps> = ({
                 {data?.news.map((item:INewsListInterFace) => (
                     <div key={item.uuid}
                         onClick={() => handleIdChange(item.uuid)}
+                        className="link"
                     >
-                        <h2>{item.title} -  <span>{item.date}</span></h2>
+                        <h4>{item.title}</h4>
+                        <p>{moment(item.date).format('ll')}</p>
                     </div>
                 ))}
             </div>
