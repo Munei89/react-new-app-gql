@@ -1,5 +1,7 @@
 import React from 'react';
 import { useQuery, gql, useMutation } from "@apollo/client";
+import Button from '@mui/material/Button';
+import moment from "moment";
 
 
 interface INewsDetailsProps {
@@ -80,21 +82,35 @@ const NewsDetail: React.FC<INewsDetailsProps> = ({id, handlePostDelete}) => {
       <h1>News Detail</h1>
       {data && data?.singleNews ? (
         <div> 
-            <h2>
-                {data?.singleNews.title} -  <span>{data?.singleNews.date}</span>
-            </h2>
-            <p onClick={() => handleLike(data?.singleNews.uuid)}>
-                click to like <br /> 
-                no of likes: {data?.singleNews.likes}
-            </p>
-            <p onClick={() => handleDislike(data?.singleNews.uuid)}>
+            <h5>
+                {data?.singleNews.title}
+            </h5>
+             <p>{moment(data?.singleNews.date).format('ll')}</p>
+             <p>
+                {data?.singleNews.likes}
+            </p>   
+                <Button
+                    variant="contained"
+                    color="primary"
+                    size="small"
+                    onClick={() => handleLike(data?.singleNews.uuid)}
+                >
+                
+                    Like
+            </Button>
+            <Button 
+                onClick={() => handleDislike(data?.singleNews.uuid)}
+                variant="contained"
+                color="secondary"
+                size="small"
+            >
                 dislike
-            </p>
+            </Button>
             <p>
                 {data?.singleNews.text}
             </p>
             <p>
-                {data?.singleNews.author}
+               Author: {data?.singleNews.author}
             </p>
             <button onClick={() => handleDelete(data?.singleNews.uuid)}> 
                 Delete
