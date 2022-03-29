@@ -10,6 +10,10 @@ import { useQuery, gql } from "@apollo/client";
     uuid: string;
     text: string;  
 }
+
+interface IProps {
+    handleIdChange: (newId: string | number) => void;
+}
 const NEWS_QUERY = gql`
   query news {
     news {
@@ -23,7 +27,9 @@ const NEWS_QUERY = gql`
   }
 `;
 
-const NewsList = () => { 
+const NewsList: React.FC<IProps> = ({
+    handleIdChange,
+}) => { 
     const { data, loading, error } = useQuery(NEWS_QUERY);
 
     if (loading) return <p>"Loading..."</p>;
@@ -34,7 +40,9 @@ const NewsList = () => {
             <h1>News</h1>
             <div>
                 {data?.news.map((item:INewsListInterFace) => (
-                    <div key={item.uuid}>
+                    <div key={item.uuid}
+                        onClick={() => handleIdChange(item.uuid)}
+                    >
                         <h2>{item.title} -  <span>{item.date}</span></h2>
                         <span>
                             likes: {item.likes}
