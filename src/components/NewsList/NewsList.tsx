@@ -13,6 +13,7 @@ import { useQuery, gql } from "@apollo/client";
 
 interface IProps {
     handleIdChange: (newId: string | number) => void;
+    postDelete: boolean;
 }
 const NEWS_QUERY = gql`
   query news {
@@ -29,8 +30,13 @@ const NEWS_QUERY = gql`
 
 const NewsList: React.FC<IProps> = ({
     handleIdChange,
+    postDelete,
 }) => { 
-    const { data, loading, error } = useQuery(NEWS_QUERY);
+    const { data, loading, error, refetch } = useQuery(NEWS_QUERY);
+
+    React.useEffect(() => {
+        refetch();
+    } , [refetch, postDelete]);
 
     if (loading) return <p>"Loading..."</p>;
     if (error) return <pre>{error.message}</pre>
@@ -44,10 +50,6 @@ const NewsList: React.FC<IProps> = ({
                         onClick={() => handleIdChange(item.uuid)}
                     >
                         <h2>{item.title} -  <span>{item.date}</span></h2>
-                        <span>
-                            likes: {item.likes}
-                        </span>
-
                     </div>
                 ))}
             </div>
